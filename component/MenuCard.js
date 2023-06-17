@@ -7,7 +7,7 @@ export default function MenuCard(props) {
             <TouchableOpacity>
                 <Image style={styles.imgfream} source={{ uri: props.image }} />
                 <View style={styles.Cardcontent}>
-                    <Text style>{props.name}</Text>
+                    <Text style={styles.cardText}>{props.name}</Text>
                 </View>
             </TouchableOpacity>
         </View>
@@ -31,7 +31,6 @@ const styles = StyleSheet.create({
         padding: 15,
         width: '45%',
         alignItems: 'center',
-
     },
     imgfream: {
         resizeMode: 'cover',
@@ -42,5 +41,8 @@ const styles = StyleSheet.create({
     },
     Cardcontent: {
         paddingTop: 10,
-    }
+    },
+    cardText: {
+        fontSize: 16,
+    },
 });
