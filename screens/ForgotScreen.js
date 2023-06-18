@@ -29,7 +29,7 @@ const Forgot = ({ navigation }) => {
 
         <Text style={styles.welcomeText}>Please Enter your email to reset the password.</Text>
         <Text style={styles.signInText}>Reset Password </Text>
-        <TextInput
+       <TextInput
           style={styles.input}
           placeholder="Email"
           // value={email}
