@@ -6,7 +6,7 @@ import { sendPasswordResetEmail } from 'firebase/auth';
 
 
 const Forgot = ({ navigation }) => {
-  const [email, setEmail] = useState('');
+ /* const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleForgot = () => {
@@ -17,7 +17,7 @@ const Forgot = ({ navigation }) => {
         .catch(function (e) {
             console.log(e);
         });
-  };
+  };*/
   const handleBack = () => {
     navigation.navigate('SignIn');
   };
@@ -28,14 +28,15 @@ const Forgot = ({ navigation }) => {
       <View style={styles.contentContainer}>
 
         <Text style={styles.welcomeText}>Please Enter your email to reset the password.</Text>
-        <Text style={styles.signInText}>Password Reset</Text>
+        <Text style={styles.signInText}>Reset Password </Text>
         <TextInput
           style={styles.input}
           placeholder="Email"
-          value={email}
-          onChangeText={text => setEmail(text)}
+          // value={email}
+          // onChangeText={text => setEmail(text)}
+          //onPress={handleForgot}
         />
-        <TouchableOpacity style={styles.button} onPress={handleForgot}>
+        <TouchableOpacity style={styles.button}>
           <Text style={styles.buttonText}>Send Email</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={handleBack}>
