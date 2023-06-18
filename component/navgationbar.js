@@ -2,7 +2,6 @@ import React from 'react';
 import 'react-native-gesture-handler';
 import { View, Image, StyleSheet } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer } from '@react-navigation/native';
 import HomeScreen from '../screens/HomeScreen'
 import MenuScreen from '../screens/MenuScreen';
 import MapScreen from '../screens/MapScreen';

@@ -7,7 +7,7 @@ export default function MenuCard(props) {
             <TouchableOpacity>
                 <Image style={styles.imgfream} source={{ uri: props.image }} />
                 <View style={styles.Cardcontent}>
-                    <Text style>{props.name}</Text>
+                    <Text>{props.name}</Text>
                 </View>
             </TouchableOpacity>
         </View>
