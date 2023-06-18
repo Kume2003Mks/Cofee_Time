@@ -5,7 +5,7 @@ import { auth } from '../AppConfig/firebase';
 import { sendPasswordResetEmail } from 'firebase/auth';
 
 
-const SignUp = ({ navigation }) => {
+const Forgot = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -48,4 +48,4 @@ const SignUp = ({ navigation }) => {
 };
 
 
-export default SignUp;
+export default Forgot;
