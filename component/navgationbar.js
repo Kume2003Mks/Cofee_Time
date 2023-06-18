@@ -1,6 +1,6 @@
 import React from 'react';
 import 'react-native-gesture-handler';
-import { View, Image, StyleSheet } from 'react-native';
+import { View, Image, StyleSheet,Text } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from '../screens/HomeScreen'
 import MenuScreen from '../screens/MenuScreen';
@@ -24,10 +24,11 @@ const Navigationbar = () => {
                     shadowOpacity: 0.45,
                     shadowRadius: 3,
                     elevation: 5,
+                    paddingTop: 5,
+                    paddingBottom: 10
                 },
                 tabBarLabelStyle: {
-                    fontSize: 14,
-                    marginBottom: 10,
+                    fontSize: 14,   
                 },
                 headerShown: false,
                 tabBarInactiveTintColor: 'white',
@@ -89,7 +90,6 @@ const Navigationbar = () => {
 const style = StyleSheet.create({
     tabcontainer: {
         position: 'absolute',
-        top: 12,
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -104,7 +104,8 @@ const style = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3,
         elevation: 5,
-    }
+    },
+    
 });
 
 export default Navigationbar;
