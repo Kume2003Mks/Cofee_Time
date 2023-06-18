@@ -4,12 +4,10 @@ import { View, Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
 export default function MenuCard(props) {
     return (
         <View style={styles.Cardcontainer}>
-            <TouchableOpacity>
                 <Image style={styles.imgfream} source={{ uri: props.image }} />
                 <View style={styles.Cardcontent}>
                     <Text>{props.name}</Text>
                 </View>
-            </TouchableOpacity>
         </View>
     );
 }
@@ -29,7 +27,6 @@ const styles = StyleSheet.create({
         },
         flexDirection: 'column',
         padding: 15,
-        width: '45%',
         alignItems: 'center',
     },
     imgfream: {

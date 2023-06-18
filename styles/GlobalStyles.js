@@ -10,8 +10,8 @@ export const GlobalStyles = StyleSheet.create({
     H1: {
         fontSize: 24,
     },
-     container: {
-    flex: 1,
-    paddingTop: 1,
-  },
+    container: {
+        flex: 1,
+        alignItems: 'center',
+    },
 });
