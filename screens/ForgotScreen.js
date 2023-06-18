@@ -6,7 +6,7 @@ import { sendPasswordResetEmail } from 'firebase/auth';
 
 
 const Forgot = ({ navigation }) => {
- /* const [email, setEmail] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleForgot = () => {
@@ -17,7 +17,7 @@ const Forgot = ({ navigation }) => {
         .catch(function (e) {
             console.log(e);
         });
-  };*/
+  };
   const handleBack = () => {
     navigation.navigate('SignIn');
   };

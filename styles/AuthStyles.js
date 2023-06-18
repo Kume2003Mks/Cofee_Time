@@ -140,12 +140,7 @@ const styles = StyleSheet.create({
   signUpLink: {
     color: 'red',
   },
-  naughtyButton: {
-    position: 'absolute',
-    backgroundColor: 'red',
-    left: 0,
-    transform: [{ translateX: isInputEmpty ? 20 : -20 }],
-  },
+
 });
 
 export default styles;
