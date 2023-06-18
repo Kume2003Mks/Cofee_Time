@@ -28,46 +28,45 @@ const SignIn = ({ navigation }) => {
             .catch((error) => Alert.alert('Error', error.message));
     };
 
+    const handleForgotPassword = () => {
+        navigation.navigate('Forgot');
+
+    };
+
     const handleSignUp = () => {
         navigation.navigate('SignUp');
     };
 
     return (
         <View style={styles.container}>
-            <View style={styles.contentContainer}>
-                <Text style={styles.signInText}>Login</Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Email"
-                    value={email}
-                    onChangeText={setEmail}
-                />
-                <TextInput
-                    style={styles.input}
-                    placeholder="Password"
-                    secureTextEntry
-                    value={password}
-                    onChangeText={setPassword}
-                />
-                <TouchableOpacity style={styles.button} onPress={handleSignIn}>
-                    <Text style={styles.buttonText}>Login</Text>
-                </TouchableOpacity>
-                <View style={{
-                    justifyContent: 'center',
-                    alignContent: 'center',
-                    padding: 10,
-                    flexDirection:'row'
-                }}>
-                    <Text>Don’t have an account?</Text>
-                        <TouchableOpacity onPress={handleSignUp}>
-                            <Text style={{color:'red',marginLeft:3}}>Sign Up</Text>
-                        </TouchableOpacity>
-                    
-                    <TouchableOpacity onPress={handleSignUp} color="red" />
-                </View>
-            </View>
+          <View style={styles.contentContainer}> 
+          <Text style={styles.welcomeText}>Welcome to Coffee Time App!</Text>
+            <Text style={styles.signInText}>Sign In</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Email"
+              value={email}
+              onChangeText={setEmail}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Password"
+              secureTextEntry
+              value={password}
+              onChangeText={setPassword}
+            />
+            <TouchableOpacity style={styles.button} onPress={handleSignIn}>
+              <Text style={styles.buttonText}>Sign In</Text>
+            </TouchableOpacity>
+             <TouchableOpacity onPress={handleForgotPassword}>
+            <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
+          </TouchableOpacity>
+          </View>
+          <View style={styles.signupContainer}>
+            <Text style={styles.signUpText}>Don't have an account? <Text style={styles.signUpLink} onPress={handleSignUp}>Sign Up</Text></Text>
+          </View>
         </View>
-    );
-};
+      );
+    };
 
 export default SignIn;

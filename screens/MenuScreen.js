@@ -14,7 +14,7 @@ export default function MenuScreen() {
             try {
                 const menuColRef = collection(DB, 'Coffee-Menu');
                 const menuSnapshot = await getDocs(menuColRef);
-                const menuListData = menuSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                const menuListData = menuSnapshot.docs.map(doc => doc.data());
                 setMenuList(menuListData);
             } catch (error) {
                 console.error('Error fetching menu:', error);
