@@ -32,7 +32,6 @@ function MenuList() {
           id: doc.id,
           ...doc.data()
         }));
-        console.log(menuList);
         setMenuList(menuListData);
       } catch (error) {
         console.error('Error fetching menu:', error);
@@ -40,7 +39,6 @@ function MenuList() {
     };
 
     getMenu();
-    console.log(menuList);
   }, []);
 
   const navigation = useNavigation();
