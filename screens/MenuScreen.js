@@ -22,15 +22,16 @@ export default function MenuScreen() {
 
 function MenuList() {
   const [menuList, setMenuList] = useState([]);
+  const [filteredMenuList, setFilteredMenuList] = useState([]);
 
   useEffect(() => {
     const getMenu = async () => {
       try {
         const menuColRef = collection(DB, 'Coffee-Menu');
         const menuSnapshot = await getDocs(menuColRef);
-        const menuListData = menuSnapshot.docs.map(doc => ({
+        const menuListData = menuSnapshot.docs.map((doc) => ({
           id: doc.id,
-          ...doc.data()
+          ...doc.data(),
         }));
         setMenuList(menuListData);
       } catch (error) {
@@ -43,12 +44,24 @@ function MenuList() {
 
   const navigation = useNavigation();
 
+  const handleSearch = (searchText) => {
+    const formattedSearchText = searchText.trim().toLowerCase();
+    const filteredItems = menuList.filter((item) =>
+      item.name.toLowerCase().includes(formattedSearchText)
+    );
+    setFilteredMenuList(filteredItems);
+  };
+
   return (
     <SafeAreaView style={GlobalStyles.SafeAreaViewstyle}>
-      <SearchBar />
+      <SearchBar onSearch={handleSearch} />
       <ScrollView contentContainerStyle={styles.view} showsVerticalScrollIndicator={false}>
-        {menuList.map(item => (
-          <TouchableOpacity style={styles.CardStyle} key={item.id} onPress={() => navigation.navigate('CoffeeDetail', { ...item })}>
+        {(filteredMenuList.length > 0 ? filteredMenuList : menuList).map((item) => (
+          <TouchableOpacity
+            style={styles.CardStyle}
+            key={item.id}
+            onPress={() => navigation.navigate('CoffeeDetail', { ...item })}
+          >
             <MenuCard {...item} />
           </TouchableOpacity>
         ))}
@@ -65,8 +78,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
   },
-  CardStyle :{
+  CardStyle: {
     width: '45%',
-
   },
 });

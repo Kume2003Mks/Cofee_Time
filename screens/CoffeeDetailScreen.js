@@ -1,40 +1,48 @@
 import React from 'react';
-import { StyleSheet, View, Image, Text, SafeAreaView, ScrollView } from 'react-native';
+import { StyleSheet, View, Image, Text, SafeAreaView, ScrollView,TouchableOpacity } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { GlobalStyles } from '../styles/GlobalStyles';
 
-const CoffeeDetailScreen = () => {
+const CoffeeDetailScreen = ({ navigation }) => {
   const route = useRoute();
   const { image, description, name, recipe, step } = route.params;
 
   const formattedRecipe = recipe.map((item, index) => `${index + 1}. ${item}`);
   const formattedStep = step.map((item, index) => `${index + 1}. ${item}`);
 
+  const handleBack = () => {
+    navigation.navigate('MenuList');
+  };
+
   return (
     <SafeAreaView style={GlobalStyles.SafeAreaViewstyle}>
       <View style={GlobalStyles.container}>
-        <Image style={styles.image} source={{ uri: image }} />
+        <TouchableOpacity style={styles.blackBtn} onPress={handleBack}>
+        <Image source={require('../assets/icon/Back.png')}
+          style={styles.iconSize} />
+          <Text style={styles.blackText}>Black</Text>
+        </TouchableOpacity>
+        <View style={styles.imageContainer}>
+          <Image style={styles.image} source={{ uri: image }} />
+        </View>
         <View style={styles.nameContainer}>
           <Text style={styles.HeaderText}>{name}</Text>
         </View>
         <View style={styles.descContainer}>
           <ScrollView showsVerticalScrollIndicator={false}>
             <Text style={styles.HeaderText}>Description</Text>
-            <Text >{description}</Text>
+            <Text style={styles.contentText} >{description}</Text>
             <Text style={styles.HeaderText}>Recipe</Text>
             {formattedRecipe.map((item) => (
-              <Text key={item}>{item}</Text>
+              <Text style={styles.contentText} key={item}>{item}</Text>
             ))}
             <Text style={styles.HeaderText}>Step</Text>
             {formattedStep.map((item) => (
-              <Text key={item}>{item}</Text>
+              <Text style={styles.contentText} key={item}>{item}</Text>
             ))}
           </ScrollView>
-
         </View>
-
       </View>
-
     </SafeAreaView>
   );
 };
@@ -43,34 +51,67 @@ export default CoffeeDetailScreen;
 
 const styles = StyleSheet.create({
   image: {
-    width: "90%",
+    width: '100%',
     height: undefined,
     aspectRatio: 16 / 9,
-    resizeMode: "center",
-    backgroundColor: "black",
+    resizeMode: 'center',
+
+  },
+  iconSize: {
+    width: 20,
+    height: 20,
+  },
+  imageContainer: {
+    width: '90%',
+    backgroundColor: 'black',
     borderRadius: 15,
+    borderWidth: 2,
+    borderColor: 'black',
+    shadowColor: 'black',
+    shadowOffset: {
+      width: 1,
+      height: 3,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 2,
+    elevation: 5
   },
   nameContainer: {
-    width: "90%",
-    height: "10%",
-    backgroundColor: "gray",
+    width: '90%',
+    height: '10%',
+    backgroundColor: '#F5E7C5',
     borderRadius: 15,
     marginVertical: 10,
     padding: 10,
-    justifyContent: "center",
+    justifyContent: 'center',
   },
   HeaderText: {
-    fontWeight: "bold",
+    fontWeight: 'bold',
     fontSize: 20,
-    color: "#ffffff",
+    color: 'black',
     marginVertical: 10,
 
   },
   descContainer: {
     padding: 10,
-    width: "90%",
-    height: "59%",
-    backgroundColor: "gray",
+    width: '90%',
+    height: '59%',
+    backgroundColor: '#F5E7C5',
     borderRadius: 15,
-  }
+  },
+  contentText: {
+    fontSize: 14,
+    textAlign: 'justify',
+    color: 'black',
+    marginHorizontal: 10,
+  },
+  blackBtn: {
+    width: '90%',
+    flexDirection: 'row',
+    marginVertical: 10,
+    alignItems: 'center',
+  },
+  blackText: {
+    marginLeft: 3
+  },
 });
