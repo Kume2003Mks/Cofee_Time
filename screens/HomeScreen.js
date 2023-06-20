@@ -1,29 +1,76 @@
-import React from 'react';
-import { View, Text, StyleSheet, SafeAreaView, Image } from "react-native";
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, SafeAreaView, ScrollView, TouchableOpacity } from 'react-native';
+import NewsCard from '../component/NewsCard';
+import SearchBar from '../component/SearchBar';
 import { GlobalStyles } from '../styles/GlobalStyles';
+import { collection, getDocs } from 'firebase/firestore/lite';
+import { DB } from '../AppConfig/firebase';
+import { createStackNavigator } from '@react-navigation/stack';
+import NewsDetailScreen from './NewsDetailScreen';
+import { useNavigation } from '@react-navigation/native';
+
+
+const MenuStack = createStackNavigator();
 
 export default function HomeScreen() {
     return (
-        <SafeAreaView style={GlobalStyles.SafeAreaViewstyle}>
-            <View style={styles.viewContainer}>
-                <Text style={GlobalStyles.H1}>News</Text>
-                <View style={styles.box}>
-                    <Image source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/coffee-time-76b8f.appspot.com/o/coffeePic%2F2.jpg?alt=media&token=44a5584d-be46-429e-bc77-d9971b410603&_gl=1*tldigs*_ga*MTM4ODg4OTMzMC4xNjg1MzUzNTAw*_ga_CW55HF8NVT*MTY4NjU1NjU2NS4xMC4xLjE2ODY1NTg1NDIuMC4wLjA.' }}
-                        resizeMode="contain"
-                        style={styles.imgSize}
-                    />
-                    <View style={styles.TextBox}>
-                        <Text style={styles.Boxh1}>เลือกเมล็ดให้เหมาะกับอุปกรณ์ที่ใช้ในการชงกาแฟ</Text>
-                        <Text style={styles.Boxh2}>เนื่องจากกาแฟมีระดับการคั่วที่แตกต่าง อุปกรณ์ชงกาแฟก็มีหลากหลาย </Text>
-                    </View>
-
-                </View>
-                <Text style={GlobalStyles.H1}>Other</Text>
-            </View>
-        </SafeAreaView>
-
-    );
+        <MenuStack.Navigator>
+    <MenuStack.Screen name="MenuList" component={MenuList} options={{ headerShown: false }} />
+    <MenuStack.Screen name="NewsDetail" component={NewsDetailScreen} options={{ headerShown: false }} />
+      </MenuStack.Navigator>
+    ); 
 }
+
+function MenuList() {
+    const [menuList, setMenuList] = useState([]);
+    const [filteredMenuList, setFilteredMenuList] = useState([]);
+  
+    useEffect(() => {
+      const getMenu = async () => {
+        try {
+          const menuColRef = collection(DB, 'News');
+          const menuSnapshot = await getDocs(menuColRef);
+          const menuListData = menuSnapshot.docs.map((doc) => ({
+            id: doc.id,
+            title: doc.data().title,
+            description: doc.data().description,
+            ...doc.data(),
+          }));
+          setMenuList(menuListData);
+        } catch (error) {
+          console.error('Error fetching menu:', error);
+        }
+      };
+  
+      getMenu();
+    }, []);
+  
+    const navigation = useNavigation();
+  
+    const handleSearch = (searchText) => {
+      const formattedSearchText = searchText.trim().toLowerCase();
+      const filteredItems = menuList.filter((item) =>
+        item.name.toLowerCase().includes(formattedSearchText)
+      );
+      setFilteredMenuList(filteredItems);
+    };
+  
+    return (
+      <SafeAreaView style={GlobalStyles.SafeAreaViewstyle}>
+        <ScrollView contentContainerStyle={styles.view} showsVerticalScrollIndicator={false}>
+          {(filteredMenuList.length > 0 ? filteredMenuList : menuList).map((item) => (
+            <TouchableOpacity
+              style={styles.CardStyle}
+              key={item.id}
+              onPress={() => navigation.navigate('NewsDetail', { ...item })}
+            >
+              <NewsCard {...item} />
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+      </SafeAreaView>
+    );
+  }
 
 const styles = StyleSheet.create({
     viewContainer: {
