@@ -55,14 +55,13 @@ const styles = StyleSheet.create({
     height: undefined,
     aspectRatio: 16 / 9,
     resizeMode: 'center',
-
   },
   iconSize: {
     width: 20,
     height: 20,
   },
   imageContainer: {
-    width: '90%',
+    marginHorizontal: 15,
     backgroundColor: 'black',
     borderRadius: 15,
     borderWidth: 2,
@@ -74,11 +73,15 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.5,
     shadowRadius: 2,
-    elevation: 5
+    elevation: 5,
+    flexWrap: 'wrap', 
+    flex: 4,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   nameContainer: {
     width: '90%',
-    height: '10%',
+    flex: 1,
     backgroundColor: '#F5E7C5',
     borderRadius: 15,
     marginVertical: 10,
@@ -95,7 +98,7 @@ const styles = StyleSheet.create({
   descContainer: {
     padding: 10,
     width: '90%',
-    height: '59%',
+    flex: 6,
     backgroundColor: '#F5E7C5',
     borderRadius: 15,
   },

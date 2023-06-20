@@ -8,6 +8,7 @@ export const GlobalStyles = StyleSheet.create({
         marginBottom: 90,
     },
     H1: {
+        marginVertical: 5,
         fontSize: 24,
     },
     container: {

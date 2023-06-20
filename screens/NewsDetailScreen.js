@@ -8,7 +8,7 @@ const NewsDetailScreen = ({ navigation }) => {
     const { image, description, title} = route.params;
 
     const handleBack = () => {
-        navigation.navigate('MenuList');
+        navigation.navigate('HomePage');
     };
 
     return (
@@ -25,8 +25,9 @@ const NewsDetailScreen = ({ navigation }) => {
                     <Text style={styles.HeaderText}>{title}</Text>
                 </View>
                 <View style={styles.descContainer}>
+                <Text style={styles.HeaderText}>Description</Text>
                     <ScrollView showsVerticalScrollIndicator={false}>
-                        <Text style={styles.HeaderText}>Description</Text>
+                        
                         <Text style={styles.contentText}>{description}</Text>
                     </ScrollView>
                 </View>
@@ -41,19 +42,18 @@ const styles = StyleSheet.create({
     image: {
         width: '100%',
         height: undefined,
-        aspectRatio: 4 / 3,
+        aspectRatio: 8 / 5,
         resizeMode: 'center',
+        borderRadius: 15,
     },
     iconSize: {
         width: 20,
         height: 20,
     },
     imageContainer: {
-        width: '70%',
+        width: '90%',
         backgroundColor: 'white',
         borderRadius: 15,
-        borderWidth: 0,
-        borderColor: 'black',
         shadowColor: 'black',
         shadowOffset: {
             width: 1,
@@ -61,11 +61,15 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.5,
         shadowRadius: 2,
-        elevation: 5
+        elevation: 5,
+        flex: 4,
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 5,
     },
     nameContainer: {
         width: '90%',
-        height: '10%',
+        flex: 1,
         backgroundColor: '#F5E7C5',
         borderRadius: 15,
         marginVertical: 10,
@@ -82,7 +86,7 @@ const styles = StyleSheet.create({
     descContainer: {
         padding: 10,
         width: '90%',
-        height: '59%',
+        flex: 5,
         backgroundColor: '#F5E7C5',
         borderRadius: 15,
     },

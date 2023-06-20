@@ -13,54 +13,49 @@ import { useNavigation } from '@react-navigation/native';
 const MenuStack = createStackNavigator();
 
 export default function HomeScreen() {
-    return (
-        <MenuStack.Navigator>
-    <MenuStack.Screen name="MenuList" component={MenuList} options={{ headerShown: false }} />
-    <MenuStack.Screen name="NewsDetail" component={NewsDetailScreen} options={{ headerShown: false }} />
-      </MenuStack.Navigator>
-    ); 
+  return (
+    <MenuStack.Navigator>
+      <MenuStack.Screen name="HomePage" component={HomePage} options={{ headerShown: false }} />
+      <MenuStack.Screen name="NewsDetail" component={NewsDetailScreen} options={{ headerShown: false }} />
+    </MenuStack.Navigator>
+  );
 }
 
-function MenuList() {
-    const [menuList, setMenuList] = useState([]);
-    const [filteredMenuList, setFilteredMenuList] = useState([]);
-  
-    useEffect(() => {
-      const getMenu = async () => {
-        try {
-          const menuColRef = collection(DB, 'News');
-          const menuSnapshot = await getDocs(menuColRef);
-          const menuListData = menuSnapshot.docs.map((doc) => ({
-            id: doc.id,
-            title: doc.data().title,
-            description: doc.data().description,
-            ...doc.data(),
-          }));
-          setMenuList(menuListData);
-        } catch (error) {
-          console.error('Error fetching menu:', error);
-        }
-      };
-  
-      getMenu();
-    }, []);
-  
-    const navigation = useNavigation();
-  
-    const handleSearch = (searchText) => {
-      const formattedSearchText = searchText.trim().toLowerCase();
-      const filteredItems = menuList.filter((item) =>
-        item.name.toLowerCase().includes(formattedSearchText)
-      );
-      setFilteredMenuList(filteredItems);
+function HomePage() {
+  const [NewList, setNewList] = useState([]);
+  const [filteredMenuList, setFilteredMenuList] = useState([]);
+
+  useEffect(() => {
+    const getMenu = async () => {
+      try {
+        const menuColRef = collection(DB, 'News');
+        const menuSnapshot = await getDocs(menuColRef);
+        const menuListData = menuSnapshot.docs.map((doc) => ({
+          id: doc.id,
+          title: doc.data().title,
+          description: doc.data().description,
+          ...doc.data(),
+        }));
+        setNewList(menuListData);
+      } catch (error) {
+        console.error('Error fetching menu:', error);
+      }
     };
-  
-    return (
-      <SafeAreaView style={GlobalStyles.SafeAreaViewstyle}>
-        <ScrollView contentContainerStyle={styles.view} showsVerticalScrollIndicator={false}>
-          {(filteredMenuList.length > 0 ? filteredMenuList : menuList).map((item) => (
+
+    getMenu();
+  }, []);
+
+  const navigation = useNavigation();
+
+  return (
+    <SafeAreaView style={GlobalStyles.SafeAreaViewstyle}>
+      <View style={styles.viewContainer}>
+        <Text style={GlobalStyles.H1}>News</Text>
+        <ScrollView contentContainerStyle={styles.view} horizontal={true}
+          showsHorizontalScrollIndicator={false}>
+          {(filteredMenuList.length > 0 ? filteredMenuList : NewList).map((item) => (
             <TouchableOpacity
-              style={styles.CardStyle}
+              style={styles.box}
               key={item.id}
               onPress={() => navigation.navigate('NewsDetail', { ...item })}
             >
@@ -68,41 +63,34 @@ function MenuList() {
             </TouchableOpacity>
           ))}
         </ScrollView>
-      </SafeAreaView>
-    );
-  }
+      </View>
+      <View style={styles.viewContainer}>
+        <Text style={GlobalStyles.H1}>Other</Text>
+        {/* เพิ่มปุ่มตรงนี้ */}
+      </View>
+    </SafeAreaView>
+  );
+}
 
 const styles = StyleSheet.create({
-    viewContainer: {
-        flex: 1,
-        margin: 10,
-    },
-    box: {
-        backgroundColor: '#E4D09D',
-        width: '100%',
-        height: undefined,
-        borderRadius: 15,
-        flexDirection: 'row',
-        padding: 15,
-        marginVertical: 15,
-    },
-    TextBox: {
-        flex: 2,
-        marginHorizontal: 10,
-    },
-    imgSize: {
-        resizeMode: 'cover',
-        borderRadius: 10,
-        width: '100%',
-        height: undefined,
-        aspectRatio: 3 / 4,
-        flex: 1
-    },
-    Boxh1: {
-        fontSize: 20,
+  viewContainer: {
+    flex: 1,
+    padding: 5,
+  },
+  box: {
+    width: 275,
+    borderRadius: 15,
+  },
+  TextBox: {
+    flex: 2,
+    marginHorizontal: 10,
+  },
 
-    },
-    Boxh2: {
-        fontSize: 14
-    },
+  Boxh1: {
+    fontSize: 20,
+
+  },
+  Boxh2: {
+    fontSize: 14
+  },
 });
