@@ -73,7 +73,6 @@ function MenuList() {
 const styles = StyleSheet.create({
   view: {
     paddingTop: 5,
-    paddingBottom: 80,
     flexWrap: 'wrap',
     flexDirection: 'row',
     justifyContent: 'space-around',
