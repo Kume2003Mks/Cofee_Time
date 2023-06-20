@@ -4,7 +4,6 @@ import { Ionicons } from '@expo/vector-icons';
 
 export default function SearchBar({ onSearch }) {
   const [searchText, setSearchText] = useState('');
-  const [searchQuery, setSearchQuery] = useState('');
 
   const handleSearch = (text) => {
     
@@ -12,11 +11,6 @@ export default function SearchBar({ onSearch }) {
     onSearch(text);
   };
 
-  const handleMapSearch = () => {
-    onSearch(searchQuery);
-  };
-
-  
 
   return (
     <View
