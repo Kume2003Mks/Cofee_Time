@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, SafeAreaView, ScrollView, TouchableOpacity } from 'react-native';
 import NewsCard from '../component/NewsCard';
-import SearchBar from '../component/SearchBar';
 import { GlobalStyles } from '../styles/GlobalStyles';
 import { collection, getDocs } from 'firebase/firestore/lite';
 import { DB } from '../AppConfig/firebase';
@@ -49,10 +48,10 @@ function HomePage() {
   }, []);
 
   const navigation = useNavigation();
-  
+
   const handleShake = () => {
     navigation.navigate('ShakeIt');
-  
+
   };
   return (
     <SafeAreaView style={GlobalStyles.SafeAreaViewstyle}>
@@ -73,12 +72,11 @@ function HomePage() {
       </View>
       <View style={styles.viewContainer}>
         <Text style={GlobalStyles.H1}>Other</Text>
-        {/* เพิ่มปุ่มตรงนี้ */}
 
-        <TouchableOpacity  onPress={handleShake} >
-        <Text style={GlobalStyles.H1}>Shake It!!</Text>
-            </TouchableOpacity>
-            
+        <TouchableOpacity onPress={handleShake} >
+          <Text style={GlobalStyles.H1}>Shake It!!</Text>
+        </TouchableOpacity>
+
       </View>
     </SafeAreaView>
   );

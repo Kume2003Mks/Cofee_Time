@@ -109,7 +109,7 @@ const ProfileScreen = () => {
     return (
         <ProfileStack.Navigator>
             <ProfileStack.Screen name="ProfilePage" component={ProfilePage} options={{ headerShown: false }} />
-            <ProfileStack.Screen name="Edit Profile" component={EditprofileScreen} />
+            <ProfileStack.Screen name="Edit Profile" component={EditprofileScreen} options={{ headerShown: false }}/>
         </ProfileStack.Navigator>
     );
 };

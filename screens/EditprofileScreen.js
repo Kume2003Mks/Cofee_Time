@@ -10,6 +10,10 @@ const EditprofileScreen = ({ navigation }) => {
   const [emailCurrentPassword, setEmailCurrentPassword] = useState('');
   const [passwordCurrentPassword, setPasswordCurrentPassword] = useState('');
 
+  const handleBack = () => {
+    navigation.navigate('ProfilePage');
+  };
+
   const handleChangeEmail = () => {
     const user = auth.currentUser;
 
@@ -105,9 +109,13 @@ const EditprofileScreen = ({ navigation }) => {
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding" keyboardVerticalOffset={Platform.OS === 'ios' ? 40 : 0}>
+      <TouchableOpacity style={styles.blackBtn} onPress={handleBack}>
+        <Image source={require('../assets/icon/Back.png')} style={styles.iconSize} />
+        <Text style={styles.blackText}>Back</Text>
+      </TouchableOpacity>
       <View style={styles.profileContainer}>
-        <Image source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/coffee-time-76b8f.appspot.com/o/coffeePic%2F2.jpg?alt=media&token=44a5584d-be46-429e-bc77-d9971b410603&_gl=1*tldigs*_ga*MTM4ODg4OTMzMC4xNjg1MzUzNTAw*_ga_CW55HF8NVT*MTY4NjU1NjU2NS4xMC4xLjE2ODY1NTg1NDIuMC4wLjA.' }} 
-        style={styles.profileImage} />
+        <Image source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/coffee-time-76b8f.appspot.com/o/coffeePic%2F2.jpg?alt=media&token=44a5584d-be46-429e-bc77-d9971b410603&_gl=1*tldigs*_ga*MTM4ODg4OTMzMC4xNjg1MzUzNTAw*_ga_CW55HF8NVT*MTY4NjU1NjU2NS4xMC4xLjE2ODY1NTg1NDIuMC4wLjA.' }}
+          style={styles.profileImage} />
         <TouchableOpacity style={styles.editProfileButton}>
           <Text style={styles.editProfileText}>Change Photo</Text>
         </TouchableOpacity>
@@ -212,5 +220,18 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     textAlign: 'center',
+  },
+  blackBtn: {
+    width: '100%',
+    flexDirection: 'row',
+    marginVertical: 10,
+    alignItems: 'center',
+  },
+  iconSize: {
+    width: 20,
+    height: 20,
+  },
+  blackText: {
+    marginLeft: 3
   },
 });
