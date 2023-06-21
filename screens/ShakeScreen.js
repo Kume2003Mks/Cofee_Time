@@ -63,7 +63,7 @@ const ShakeRandomizer = () => {
           <Button title="Shake Again" onPress={handleShakeAgain} />
         </>
       ) : (
-        <Text style={{ fontSize: 24 }}>Shake your device to randomize a product</Text>
+        <Text style={{ fontSize: 24 }}>Shake Shake It!</Text>
       )}
     </View>
   );

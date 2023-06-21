@@ -1,25 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, SafeAreaView } from 'react-native';
+import { View, StyleSheet, SafeAreaView, Image } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import SearchBar from '../component/SearchBar';
 import { GlobalStyles } from '../styles/GlobalStyles';
-import { collection, getDocs, query, where } from 'firebase/firestore/lite';
+import { collection, getDocs, query } from 'firebase/firestore/lite';
 import { DB } from '../AppConfig/firebase';
 
 const MapScreen = () => {
   const [mapList, setMapList] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
+  const [originalMapList, setOriginalMapList] = useState([]);
+
   useEffect(() => {
-    const getMenu = async () => {
+    const getMap = async () => {
       try {
         const mapColRef = collection(DB, 'Markers');
         let mapQuery = query(mapColRef);
-  
-        if (searchQuery) {
-          const searchValue = searchQuery.toLowerCase(); // Convert the search query to lowercase
-          mapQuery = query(mapColRef, where('title', '==', searchValue)); // Perform a case-insensitive comparison
-        }
-  
         const mapSnapshot = await getDocs(mapQuery);
         const mapListData = mapSnapshot.docs.map((doc) => ({
           id: doc.id,
@@ -28,16 +24,27 @@ const MapScreen = () => {
           title: doc.data().title,
         }));
         setMapList(mapListData);
+        setOriginalMapList(mapListData); // Save the original data
       } catch (error) {
         console.error('Error fetching menu:', error);
       }
     };
-  
-    getMenu();
-  }, [searchQuery]);
 
-  const handleSearch = (query) => {
-    setSearchQuery(query);
+    getMap();
+  }, []);
+
+  const handleSearch = (searchText) => {
+    const formattedSearchText = searchText.trim().toLowerCase();
+
+    if (formattedSearchText === '') {
+      // Reset mapList to the original data fetched from Firebase
+      setMapList(originalMapList);
+    } else {
+      const filteredItems = originalMapList.filter((item) =>
+        item.title.toLowerCase().includes(formattedSearchText)
+      );
+      setMapList(filteredItems);
+    }
   };
 
   const initialRegion = {
@@ -62,7 +69,9 @@ const MapScreen = () => {
                   key={id}
                   coordinate={{ latitude, longitude }}
                   title={title}
-                />
+                >
+                  <Image source={require('../assets/icon/coffee-cup.png')} style={styles.markerImage} />
+                </Marker>
               );
             }
             return null;
@@ -80,6 +89,10 @@ const styles = StyleSheet.create({
   },
   map: {
     flex: 1,
+  },
+  markerImage: {
+    width: 30,
+    height: 30,
   },
 });
 
