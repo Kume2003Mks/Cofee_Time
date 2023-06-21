@@ -7,6 +7,8 @@ import { collection, getDocs } from 'firebase/firestore/lite';
 import { DB } from '../AppConfig/firebase';
 import { createStackNavigator } from '@react-navigation/stack';
 import NewsDetailScreen from './NewsDetailScreen';
+import ShakeItScreen from './ShakeScreen';
+
 import { useNavigation } from '@react-navigation/native';
 
 
@@ -17,6 +19,7 @@ export default function HomeScreen() {
     <MenuStack.Navigator>
       <MenuStack.Screen name="HomePage" component={HomePage} options={{ headerShown: false }} />
       <MenuStack.Screen name="NewsDetail" component={NewsDetailScreen} options={{ headerShown: false }} />
+      <MenuStack.Screen name="ShakeIt" component={ShakeItScreen} options={{ headerShown: false }} />
     </MenuStack.Navigator>
   );
 }
@@ -46,7 +49,11 @@ function HomePage() {
   }, []);
 
   const navigation = useNavigation();
-
+  
+  const handleShake = () => {
+    navigation.navigate('ShakeIt');
+  
+  };
   return (
     <SafeAreaView style={GlobalStyles.SafeAreaViewstyle}>
       <View style={styles.viewContainer}>
@@ -67,6 +74,11 @@ function HomePage() {
       <View style={styles.viewContainer}>
         <Text style={GlobalStyles.H1}>Other</Text>
         {/* เพิ่มปุ่มตรงนี้ */}
+
+        <TouchableOpacity  onPress={handleShake} >
+        <Text style={GlobalStyles.H1}>Shake It!!</Text>
+            </TouchableOpacity>
+            
       </View>
     </SafeAreaView>
   );
