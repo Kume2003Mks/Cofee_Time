@@ -116,7 +116,7 @@ const EditprofileScreen = ({ navigation }) => {
           alignContent: 'center',
           marginTop: 10, fontSize: 24, fontWeight: 'bold',
         }}>
-          Edit User
+          Edit Profile
         </Text>
       </View>
       <View style={styles.formContainer}>

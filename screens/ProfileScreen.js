@@ -74,7 +74,7 @@ const ProfilePage = ({ navigation }) => {
                 <Text style={[styles.cardTitle, { color: 'black' }]}>Login as: {userEmail}</Text>
                 {/*ชื่อ user*/}
                 <TouchableOpacity style={styles.editProfileButton} onPress={() => navigation.navigate('Edit Profile')}>
-                    <Text style={styles.editProfileText}>Edit User</Text>
+                    <Text style={styles.editProfileText}>Edit Profile</Text>
                 </TouchableOpacity>
             </View>
             <View style={styles.cardContainer}>
