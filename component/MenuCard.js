@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { View, Image, StyleSheet, Text } from 'react-native';
 
 export default function MenuCard(props) {
     return (
@@ -28,6 +28,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         padding: 15,
         alignItems: 'center',
+        
     },
     imgfream: {
         resizeMode: 'cover',
@@ -38,5 +39,6 @@ const styles = StyleSheet.create({
     },
     Cardcontent: {
         paddingTop: 10,
+        
     }
 });

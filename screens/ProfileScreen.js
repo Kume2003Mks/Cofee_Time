@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{ useEffect, useState } from 'react';
 import {
     StyleSheet,
     View,
@@ -13,38 +13,43 @@ import { GlobalStyles } from '../styles/GlobalStyles';
 import EditprofileScreen from '../screens/EditprofileScreen';
 import { auth, currentUser } from '../AppConfig/firebase';
 import { signOut } from 'firebase/auth';
-import { useEffect, useState } from 'react';
+import MenuCard from '../component/MenuCard';
+import { getFirestore, collection, addDoc, deleteDoc, doc, getDocs,onSnapshot } from 'firebase/firestore';
 
 const ProfileStack = createStackNavigator();
 
-const ProductCard = () => {
-    {/*เมนูกาแฟ*/ }
-    return (
-        <View style={[styles.card, { backgroundColor: '#F5E7C5', marginRight: 10 }]}>
-
-            <Image
-                style={styles.image}
-
-                source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/coffee-time-76b8f.appspot.com/o/coffeePic%2F2.jpg?alt=media&token=44a5584d-be46-429e-bc77-d9971b410603&_gl=1*tldigs*_ga*MTM4ODg4OTMzMC4xNjg1MzUzNTAw*_ga_CW55HF8NVT*MTY4NjU1NjU2NS4xMC4xLjE2ODY1NTg1NDIuMC4wLjA.' }}
-            />
-            <Text style={styles.title}>Product</Text>
-
-        </View>
-    );
-};
-
 const ProfilePage = ({ navigation }) => {
+
     const [userEmail, setUserEmail] = useState('');
+    const [favoriteMenus, setFavoriteMenus] = useState([]);
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((user) => {
             if (user) {
                 setUserEmail(user.email);
+                fetchFavoriteMenus(user.uid);
             }
         });
 
         return () => unsubscribe();
     }, []);
+
+    const fetchFavoriteMenus = (uid) => {
+        const db = getFirestore();
+        const favoriteMenuRef = collection(db, 'users', uid, 'favoriteMenu');
+        
+        onSnapshot(favoriteMenuRef, (snapshot) => {
+          const favoriteMenusData = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }));
+          setFavoriteMenus(favoriteMenusData);
+        }, (error) => {
+          console.log('เกิดข้อผิดพลาดในการดึงข้อมูลรายการโปรด', error);
+        });
+      };
+      
+
 
     const handleLogout = () => {
         signOut(auth)
@@ -61,22 +66,21 @@ const ProfilePage = ({ navigation }) => {
             <View style={styles.profileContainer}>
                 <Text style={{
                     alignContent: 'center',
-                    marginVertical: 10, fontSize: 24, fontWeight: 'bold',
+                    marginTop: 10, fontSize: 24, fontWeight: 'bold',
                 }}>
                     Profile
                 </Text>
-                <Image source={{ uri: 'https://uploads.dailydot.com/2018/10/olli-the-polite-cat.jpg?auto=compress&fm=pjpg' }}
-                    style={styles.profileImage} />
-                <Text style={[styles.cardTitle, { color: 'black' }]}>{userEmail}</Text>
+
+                <Text style={[styles.cardTitle, { color: 'black' }]}>Login as: {userEmail}</Text>
                 {/*ชื่อ user*/}
                 <TouchableOpacity style={styles.editProfileButton} onPress={() => navigation.navigate('Edit Profile')}>
-                    <Text style={styles.editProfileText}>Edit Profile</Text>
+                    <Text style={styles.editProfileText}>Edit User</Text>
                 </TouchableOpacity>
             </View>
             <View style={styles.cardContainer}>
                 {/* My Menu Card */}
                 <View style={styles.card}>
-                    <Text style={styles.cardTitle}>My Menu</Text>
+                    <Text style={styles.cardTitle}>My Favourites</Text>
 
 
                     <View style={styles.coffeeCard}>
@@ -85,19 +89,25 @@ const ProfilePage = ({ navigation }) => {
                             horizontal={true}
                             showsHorizontalScrollIndicator={false}>
 
-                            <ProductCard />
-                            <ProductCard />
-                            <ProductCard />
-                            <ProductCard />
-                            {/*เมนูกาแฟ*/}
+                                
+                                    
+                            {favoriteMenus.map((menu) => (
+                                <TouchableOpacity style={styles.wrapCard} key={menu.id}>
+                                <MenuCard
+                                    name={menu.name}
+                                    image={menu.image}
+                                // ส่ง prop เพิ่มเติมตามความต้องการ
+                                />
+                                </TouchableOpacity>
+                            ))}
+
+                                
+
                         </ScrollView>
 
                     </View>
                 </View>
             </View>
-            <TouchableOpacity style={styles.favButton}>
-                <Text style={styles.favButtonText}>My Favourites</Text>
-            </TouchableOpacity>
 
             <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
                 <Text style={styles.logoutButtonText}>Logout</Text>
@@ -109,7 +119,7 @@ const ProfileScreen = () => {
     return (
         <ProfileStack.Navigator>
             <ProfileStack.Screen name="ProfilePage" component={ProfilePage} options={{ headerShown: false }} />
-            <ProfileStack.Screen name="Edit Profile" component={EditprofileScreen} options={{ headerShown: false }}/>
+            <ProfileStack.Screen name="Edit Profile" component={EditprofileScreen} options={{ headerShown: false }} />
         </ProfileStack.Navigator>
     );
 };
@@ -160,11 +170,12 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         marginBottom: 5,
         width: '100%',
+        padding: 5
     },
     card: {
         backgroundColor: '#4B1F0B',
         borderRadius: 15,
-        padding: 10,
+        padding: 15,
         marginBottom: 10,
     },
     cardTitle: {
@@ -177,12 +188,13 @@ const styles = StyleSheet.create({
     coffeeCard: {
         backgroundColor: 'transparent',
         borderRadius: 8,
-        padding: 10,
+        // padding: 5,
         marginBottom: 10,
         height: 200,
     },
     scrollContainer: {
-        flexGrow: 1,
+        flexWrap: 'wrap',
+        flexGrow: 1
     },
     logoutButton: {
         backgroundColor: '#4B1F0B',
@@ -208,6 +220,11 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
         textAlign: 'center',
+    },
+    wrapCard: {
+        height: undefined,
+        width: 160,
+        marginLeft: 10
     },
 
 });

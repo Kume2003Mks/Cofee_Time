@@ -98,9 +98,7 @@ const EditprofileScreen = ({ navigation }) => {
   const signOutUser = () => {
     auth.signOut()
       .then(() => {
-        // User has been signed out successfully
-        // Perform any additional actions after logout
-        navigation.navigate('SignIn'); // Navigate to the login screen or any other screen after logout
+        navigation.navigate('SignIn');
       })
       .catch((error) => {
         Alert.alert('Error', error.message);
@@ -114,11 +112,12 @@ const EditprofileScreen = ({ navigation }) => {
         <Text style={styles.blackText}>Back</Text>
       </TouchableOpacity>
       <View style={styles.profileContainer}>
-        <Image source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/coffee-time-76b8f.appspot.com/o/coffeePic%2F2.jpg?alt=media&token=44a5584d-be46-429e-bc77-d9971b410603&_gl=1*tldigs*_ga*MTM4ODg4OTMzMC4xNjg1MzUzNTAw*_ga_CW55HF8NVT*MTY4NjU1NjU2NS4xMC4xLjE2ODY1NTg1NDIuMC4wLjA.' }}
-          style={styles.profileImage} />
-        <TouchableOpacity style={styles.editProfileButton}>
-          <Text style={styles.editProfileText}>Change Photo</Text>
-        </TouchableOpacity>
+        <Text style={{
+          alignContent: 'center',
+          marginTop: 10, fontSize: 24, fontWeight: 'bold',
+        }}>
+          Edit User
+        </Text>
       </View>
       <View style={styles.formContainer}>
         <TextInput
@@ -178,6 +177,7 @@ const styles = StyleSheet.create({
   profileContainer: {
     alignItems: 'center',
     marginBottom: 20,
+    padding: 20,
   },
   profileImage: {
     width: 100,
@@ -207,13 +207,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 12,
     marginBottom: 10,
+    borderColor:'black',
+    borderWidth: 1,
   },
   saveButton: {
     backgroundColor: '#8B4513',
     paddingVertical: 12,
     paddingHorizontal: 24,
     borderRadius: 20,
-    marginTop: 20,
+    marginVertical: 16,
   },
   saveButtonText: {
     color: '#FFFFFF',
