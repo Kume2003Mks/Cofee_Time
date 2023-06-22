@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, ScrollView, TouchableOpacity,Image } from 'react-native';
 import NewsCard from '../component/NewsCard';
 import { GlobalStyles } from '../styles/GlobalStyles';
 import { collection, getDocs } from 'firebase/firestore/lite';
@@ -73,7 +73,9 @@ function HomePage() {
       <View style={styles.viewContainer}>
         <Text style={GlobalStyles.H1}>Other</Text>
 
-        <TouchableOpacity onPress={handleShake} >
+        <TouchableOpacity onPress={handleShake} style={styles.ButtonBox}>
+          <Image source={require('../assets/icon/shake.png')}
+          style={styles.ImageSize}/>
           <Text style={GlobalStyles.H1}>Shake It!!</Text>
         </TouchableOpacity>
 
@@ -85,22 +87,36 @@ function HomePage() {
 const styles = StyleSheet.create({
   viewContainer: {
     flex: 1,
-    padding: 5,
+    padding: 10,
   },
   box: {
     width: 275,
     borderRadius: 15,
   },
-  TextBox: {
-    flex: 2,
-    marginHorizontal: 10,
+  ButtonBox: {
+    width: 150,
+    height: 150,
+    alignContent: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5E7C5',
+    borderRadius: 15,
+    elevation: 5,
+    shadowColor: 'black',
+    shadowRadius: 2,
+    shadowOpacity: 0.5,
+    shadowOffset: {
+        height: 3,
+        width: 2
+    },
+    flexDirection: 'column',
+  },
+  ImageSize: {
+    width: '50%',
+    height: undefined,
+    aspectRatio: 1,
+
   },
 
-  Boxh1: {
-    fontSize: 20,
 
-  },
-  Boxh2: {
-    fontSize: 14
-  },
 });
