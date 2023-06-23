@@ -32,11 +32,11 @@ const Forgot = ({ navigation }) => {
        <TextInput
           style={styles.input}
           placeholder="Email"
-          // value={email}
-          // onChangeText={text => setEmail(text)}
+          value={email}
+           onChangeText={text => setEmail(text)}
           //onPress={handleForgot}
         />
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={handleForgot} >
           <Text style={styles.buttonText}>Send Email</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={handleBack}>
